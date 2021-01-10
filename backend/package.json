@@ -1,0 +1,31 @@
+{
+  "name": "simple-chat-api",
+  "version": "1.0.0",
+  "description": "the API for simple chat",
+  "main": "index.js",
+  "engines": {
+    "node": "12.18.2"
+  },
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gabe Kirkley",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.15",
+    "loglevel": "^1.7.1",
+    "pg": "^8.5.1",
+    "ws": "^7.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
