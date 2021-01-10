@@ -1,4 +1,5 @@
 import * as React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Chat from "./components/Chat";
 import styled from "styled-components";
 
@@ -40,7 +41,16 @@ function App() {
   return (
     <AppStyle>
       <main>
-        <Chat welcome={welcome} />
+        <BrowserRouter>
+          <Switch>
+            <Route path="/:id">
+              <Chat welcome={welcome} />
+            </Route>
+            <Route path="/">
+              <Chat welcome={welcome} />
+            </Route>
+          </Switch>
+        </BrowserRouter>
       </main>
     </AppStyle>
   );

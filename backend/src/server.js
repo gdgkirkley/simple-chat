@@ -7,12 +7,24 @@ export async function startServer({port = process.env.PORT} = {}) {
   const app = express()
 
   const wsServer = new ws.Server({noServer: true})
+
   wsServer.on('connection', socket => {
+    socket.rooms = []
+    socket.send(
+      JSON.stringify({
+        message: `A new user just joined ${socket.upgradeReq.url}!`,
+        system: true,
+        date: new Date(),
+      }),
+    )
+
     socket.on('message', message => {
       logger.info(message)
       wsServer.clients.forEach(client => {
-        if (client !== ws && client.readyState === ws.OPEN) {
-          client.send(message)
+        if (client.upgradeReq.url === socket.upgradeReq.url) {
+          if (client.readyState === ws.OPEN) {
+            client.send(JSON.stringify({...JSON.parse(message), system: false}))
+          }
         }
       })
     })
@@ -36,6 +48,7 @@ export async function startServer({port = process.env.PORT} = {}) {
 
   server.on('upgrade', (request, socket, head) => {
     wsServer.handleUpgrade(request, socket, head, socket => {
+      socket.upgradeReq = request
       wsServer.emit('connection', socket, request)
     })
   })

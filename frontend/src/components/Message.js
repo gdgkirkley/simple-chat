@@ -17,7 +17,7 @@ const Username = styled.span`
   color: #222;
 `;
 
-const MessageDate = styled.span`
+export const MessageDate = styled.span`
   text-align: right;
 `;
 
@@ -26,8 +26,15 @@ const MessageText = styled.div`
   line-height: 1.5;
 `;
 
-const Message = ({ name, message, date }) => {
-  return (
+const Message = ({ name, message, date, system }) => {
+  return system ? (
+    <MessageStyle>
+      <MessageText>
+        <em>{message}</em>
+        <MessageDate>{formatDate(date)}</MessageDate>
+      </MessageText>
+    </MessageStyle>
+  ) : (
     <MessageStyle>
       <MessageInfo>
         <Username>{name}</Username>
@@ -38,7 +45,7 @@ const Message = ({ name, message, date }) => {
   );
 };
 
-const formatDate = (date) => {
+export const formatDate = (date) => {
   return new Date(date).toLocaleDateString("en-US", {
     hour12: true,
     hour: "numeric",

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import ChatInput from "./ChatInput";
-import Message from "./Message";
+import Message, { formatDate } from "./Message";
 
 const ChatBox = styled.div`
   border: 1px solid #ececec;
@@ -23,8 +24,9 @@ const chatURL = "ws://localhost:4000";
 const Chat = ({ welcome }) => {
   const [name, setName] = React.useState("");
   const [messages, setMessages] = React.useState([]);
-  const [ws, setWS] = React.useState(new WebSocket(chatURL));
 
+  const { id } = useParams();
+  const [ws, setWS] = React.useState(new WebSocket(`${chatURL}/${id}`));
   const chatbox = React.useRef(null);
 
   React.useEffect(() => {
@@ -72,6 +74,7 @@ const Chat = ({ welcome }) => {
                 name={message.name}
                 message={message.message}
                 date={message.date}
+                system={message.system}
               />
             ))
           : null}
